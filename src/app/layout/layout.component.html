@@ -1,0 +1,21 @@
+<app-header></app-header>
+<!--app-error></app-error-->
+<div class="container-fluid">
+    <main class="main">
+        @if(!isLoggedIn){
+          <div>
+            <h1>Please Login</h1>
+            <button (click)="login()">LOGIN</button>
+          </div>
+        }
+        @else{
+          <div>
+            <h1>Hello, {{ title }}</h1>
+            <p>Congratulations! Your app is running. 🎉</p>
+            <button (click)="logout()">LOGOUT</button>
+          </div>
+        }
+      </main>
+    <router-outlet />
+</div>
+<app-footer></app-footer>
