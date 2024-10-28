@@ -17,8 +17,6 @@ export class LayoutComponent implements OnInit {
   loginLabel = "LOGIN";
   logoutLabel = "LOGOUT"
   isLoggedIn = false;
-  
-  constructor() { };
 
   login() {
     this.isLoggedIn = true;

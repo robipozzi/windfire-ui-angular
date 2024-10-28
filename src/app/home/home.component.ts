@@ -10,10 +10,8 @@ export class HomeComponent implements OnInit {
   welcomeMsg = "Welcome";
   title = "Windfire UI Angular";
   mainFunctionsLabel = "Main Functions";
-  getRestaurantsLabel = "My Restaurants List";
-  addRestaurantLabel = "Add Restaurant";
-
-  constructor() { }
+  restaurantsLabel = "Restaurants";
+  sensorsLabel = "Sensors";
 
   ngOnInit() {
   }

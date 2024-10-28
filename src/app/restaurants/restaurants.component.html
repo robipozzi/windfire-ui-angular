@@ -1,6 +1,13 @@
-  <div class="d-flex justify-content-center">
-    <h1>Hello, {{ title }}</h1>
-  </div>
-  <div class="d-flex justify-content-center">
-    <p>Congratulations! Your app is running. 🎉</p>
-  </div>
+<div class="d-flex justify-content-center">
+  <h1>{{ title }}</h1>
+</div>
+<div class="d-flex justify-content-center">
+  <hr class="my-4">
+  <h3>{{ mainFunctionsLabel }}</h3>
+</div>
+<div class="d-flex justify-content-center">
+  <a class="btn btn-primary btn-sm" routerLink="/restaurants" role="button">{{ getRestaurantsLabel }}</a>
+</div>
+<div class="d-flex justify-content-center">
+  <a class="btn btn-primary btn-sm" routerLink="/add" role="button">{{ addRestaurantLabel }}</a>
+</div>

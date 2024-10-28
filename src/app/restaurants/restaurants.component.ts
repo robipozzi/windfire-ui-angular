@@ -7,5 +7,8 @@ import { Component } from "@angular/core";
 })
 
 export class RestaurantsComponent {
-    title = 'Windfire UI Angular';
+    title = 'Windfire Restaurants';
+    mainFunctionsLabel = "Main Functions";
+    getRestaurantsLabel = "My Restaurants List";
+    addRestaurantLabel = "Add Restaurant";
 }
