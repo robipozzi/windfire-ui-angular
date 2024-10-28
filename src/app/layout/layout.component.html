@@ -2,23 +2,18 @@
 <!--app-error></app-error-->
 <div class="container-fluid">
   @if(!isLoggedIn){
-  <div class="d-flex justify-content-center">
-    <h1>Please Login</h1>
-  </div>
-  <div class="d-flex justify-content-center">
-    <button class="btn btn-primary btn-sm" (click)="login()">LOGIN</button>
-  </div>
+    <div class="d-flex justify-content-center">
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-primary btn-sm" (click)="login()">{{ loginLabel }}</button>
+    </div>
   }
   @else{
-  <div class="d-flex justify-content-center">
-    <h1>Hello, {{ title }}</h1>
-  </div>
-  <div class="d-flex justify-content-center">
-    <p>Congratulations! Your app is running. 🎉</p>
-  </div>
-  <div class="d-flex justify-content-center">
-    <button class="btn btn-primary btn-sm" (click)="logout()">LOGOUT</button>
-  </div>
+    <home></home>
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-primary btn-sm" (click)="logout()">{{ logoutLabel }}</button>
+    </div>
   }
   <router-outlet />
 </div>
