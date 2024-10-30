@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'home',
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   standalone: true,
   templateUrl: './home.component.html'
 })
@@ -14,10 +17,6 @@ export class HomeComponent implements OnInit {
   sensorsLabel = "Sensors";
 
   ngOnInit() {
-  }
-
-  add(): void {
-    console.log("######## ADD");
   }
 
 }

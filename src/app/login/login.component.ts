@@ -1,15 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from '../header/header.component';
-import { ErrorComponent } from '../error/error.component';
 import { HomeComponent } from '../home/home.component';
-import { FooterComponent } from '../footer/footer.component';
 import { AuthService } from './services/auth.service';
+import { ErrorService } from '../error/services/error.service';
 
 @Component({
   selector: 'login',
-  imports: [RouterOutlet, FormsModule, HeaderComponent, ErrorComponent, HomeComponent, FooterComponent],
+  imports: [FormsModule, HomeComponent],
   standalone: true,
   templateUrl: './login.component.html'
 })
@@ -25,18 +22,40 @@ export class LoginComponent implements OnInit {
   @Input() username = "";
   @Input() password = "";
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private errorService: ErrorService) {}
 
   login() {
     console.log("LOGIN !!!");
+    this.errorService.clear();
+    if(this.isValid()){
+      this.authService.login();
+    }
     this.clean();
-    this.authService.login()
   }
 
   logout() {
     console.log("LOGOUT !!!")
+    this.errorService.clear();
     this.clean();
-    this.authService.logout()
+    this.authService.logout();
+  }
+
+  private isValid() {
+    console.log("Username = " + this.username);
+    console.log("Password = " + this.password);
+    if(this.username == "" && this.password == ""){
+      console.log("Username and/or Password are not valid");
+      this.errorService.add("Error during login");
+      this.errorService.add("Username and/or Password are not valid");
+      return false;
+    } 
+    if(this.username != "" && this.password == ""){
+      console.log("Password is not valid");
+      this.errorService.add("Error during login");
+      this.errorService.add("Password is not valid");
+      return false;
+    }
+    return true;
   }
 
   private clean() {
