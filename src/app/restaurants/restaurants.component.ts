@@ -2,9 +2,11 @@ import { Component } from "@angular/core";
 import { Restaurant } from './model/restaurant';
 import { RestaurantService } from './services/restaurant.service';
 import { ErrorService } from '../error/services/error.service';
+import { RestaurantAddComponent } from "./add-new/restaurant-add.component";
 
 @Component({
     selector: 'restaurants',
+    imports: [RestaurantAddComponent],
     standalone: true,
     templateUrl: './restaurants.component.html'
 })
@@ -26,7 +28,7 @@ export class RestaurantsComponent {
         this.getRestaurants();
     }
 
-    add(): void {
+    openAddRestaurantForm(): void {
         this.addFormView = true;
     }
 
