@@ -44,6 +44,7 @@ export class RestaurantsComponent {
         } else {
             this.restaurantService.getRestaurants().subscribe(obj => this.processResponse(obj));
         }*/
+       this.addFormView = false;
        this.restaurants = this.restaurantService.getRestaurantsFake();
     }
 

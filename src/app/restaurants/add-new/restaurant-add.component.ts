@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ErrorService } from '../../error/services/error.service';
 import { Restaurant } from '../model/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
 
 @Component({
   selector: 'restaurant-add-new',
+  imports: [FormsModule],
   standalone: true,
   templateUrl: './restaurant-add.component.html'
 })

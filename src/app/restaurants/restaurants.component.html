@@ -15,7 +15,7 @@
 
 <div class="d-flex justify-content-center">
   <p class="d-inline-flex gap-1">
-    <a class="btn btn-primary btn-sm" routerLink="/restaurants" role="button">{{ getRestaurantsLabel }}</a>
+    <a class="btn btn-primary btn-sm" role="button" (click)="getRestaurants()">{{ getRestaurantsLabel }}</a>
     <a class="btn btn-primary btn-sm" role="button" (click)="openAddRestaurantForm()">{{ addRestaurantLabel }}</a>
   </p>
 </div>
@@ -25,26 +25,28 @@
     <restaurant-add-new></restaurant-add-new>
   </div>
 }
-<div class="bg-primary text-center text-white font-weight-bold">Restaurants</div>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Address</th>
-      <th scope="col">Type of cuisine</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    @for(restaurant of restaurants; track restaurant.id){
-    <tr>
-      <td>{{restaurant.id}}</td>
-      <td>{{restaurant.name}}</td>
-      <td>{{restaurant.street}}, {{restaurant.zipcode}} {{restaurant.city}}</td>
-      <td>{{restaurant.cuisine}}</td>
-      <td><button class="btn btn-primary" (click)="delete(restaurant)">Delete</button></td>
-    </tr>
-    }
-  </tbody>
-</table>
+@else{
+  <div class="bg-primary text-center text-white font-weight-bold">Restaurants</div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Type of cuisine</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(restaurant of restaurants; track restaurant.id){
+      <tr>
+        <td>{{restaurant.id}}</td>
+        <td>{{restaurant.name}}</td>
+        <td>{{restaurant.street}}, {{restaurant.zipcode}} {{restaurant.city}}</td>
+        <td>{{restaurant.cuisine}}</td>
+        <td><button class="btn btn-primary" (click)="delete(restaurant)">Delete</button></td>
+      </tr>
+      }
+    </tbody>
+  </table>
+}
