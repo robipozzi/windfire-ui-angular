@@ -33,13 +33,6 @@ export class LoginComponent implements OnInit {
     this.clean();
   }
 
-  logout() {
-    console.log("LOGOUT !!!")
-    this.errorService.clear();
-    this.clean();
-    this.authService.logout();
-  }
-
   private isValid() {
     console.log("Username = " + this.username);
     console.log("Password = " + this.password);
