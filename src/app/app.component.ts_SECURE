@@ -1,0 +1,131 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
+import { ErrorComponent } from './error/error.component';
+import { FooterComponent } from './footer/footer.component';
+import { KeycloakEventType, KeycloakService } from 'keycloak-angular';
+import { HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, HeaderComponent, ErrorComponent, FooterComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+
+export class AppComponent {
+  keycloakService: KeycloakService;
+  httpClient: HttpClient;
+
+  constructor(keycloakService: KeycloakService, httpClient: HttpClient) {
+    this.keycloakService = keycloakService;
+    this.httpClient = httpClient;
+
+    keycloakService.keycloakEvents$.subscribe({
+      next(event) {
+        if (event.type == KeycloakEventType.OnTokenExpired) {
+          keycloakService.updateToken(20);
+        }
+      }
+    });
+  }
+
+  public login(): void {
+    this.keycloakService.login();
+  }
+
+  public logout(): void {
+    this.keycloakService.logout();
+  }
+
+  public isLoggedIn(): void {
+    //this.statusPanel = 'Is Logged In: ' + this.keycloakService.isLoggedIn();
+    console.log("LOGGED IN !!!");
+  }
+
+  public copyAccessTokenToClipboard(): void {
+    this.keycloakService.getToken().then(token => {
+      //this.clipboard.copy(token);
+      //this.statusPanel = 'Copied the token to clipboard';
+    })
+      .catch(e => 'Error occurred while copying');
+  }
+
+  public parseAccessToken(): void {
+    this.keycloakService.getToken().then(token => {
+      //this.statusPanel = this.toJWTString(token);
+
+      // alternatively below funciton call can be used to get the parsed token
+      // this.keycloakService.getKeycloakInstance().tokenParsed
+
+    })
+      .catch(e => { 'Error occurred while parsing. check console logs'; console.error(e) });
+  }
+
+  public isTokenExpired(): void {
+
+    /**
+     * Extracted from Keycloak JS documentation
+     * Returns true if the token has less than minValidity seconds 
+     * left before it expires (minValidity is optional, if not specified 0 is used).
+     */
+    //this.statusPanel = this.keycloakService.isTokenExpired(10).toString();
+  }
+
+  /**
+   * Extracted from Keycloak JS documentation
+   * If the token expires within minValidity seconds 
+   * (minValidity is optional, if not specified 5 is used) the token is refreshed. 
+   * If -1 is passed as the minValidity, the token will be forcibly refreshed. 
+   * If the session status iframe is enabled, the session status is also checked.
+  */
+  public async updateToken() {
+    try {
+      let refreshed = await this.keycloakService.updateToken(5);
+      //this.statusPanel = (refreshed ? 'Token was refreshed' : 'Token is still valid');
+    } catch (error) {
+      //this.statusPanel = 'Failed to refresh the token check console logs'
+      console.error('Failed to refresh the token:', error);
+    }
+  }
+
+  public async sendHttpRequest() {
+    this.httpClient.get('https://ab81a40b274c481694de52422e7c28c3.api.mockbin.io/')
+      .subscribe(res => {
+        console.log(res)
+      })
+    //this.statusPanel = "HTTP Request Sent. Please check browser's network tab";
+  }
+
+  public showRoles() {
+    let roles = this.keycloakService.getUserRoles();
+    //this.statusPanel = roles.join(', ');
+
+    // if need to check whether the user has a particular role
+    //this.keycloakService.isUserInRole('angular-client-role')
+  }
+
+  /** 
+   * Please refer to the below documentation for more info
+   * https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter
+  **/
+
+  public resetPanel() {
+    //this.statusPanel = '';
+  }
+
+
+  private toJWTString(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+
+    return jsonPayload;
+  }
+}

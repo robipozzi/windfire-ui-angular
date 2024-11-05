@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../login/services/auth.service';
 import { ErrorService } from '../error/services/error.service';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-header',
@@ -11,20 +11,39 @@ import { ErrorService } from '../error/services/error.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn = false;
-  
-  constructor(private authService: AuthService, private errorService: ErrorService) {}
+  isAuthenticated = false;
+  private keycloakService: KeycloakService;
+  private errorService: ErrorService
 
-  ngOnInit() {
-    this.authService.loggedIn$.subscribe(loggedIn => {
-      this.isLoggedIn = loggedIn;
-    });
+  constructor(/*private authService: AuthService,*/ errorService: ErrorService, keycloakService: KeycloakService) {
+    this.keycloakService = keycloakService;
+    this.errorService = errorService;
   }
 
-  logout() {
+  ngOnInit() {
+    /*this.authService.loggedIn$.subscribe(loggedIn => {
+      this.isLoggedIn = loggedIn;
+    });*/
+  }
+
+  /*logout() {
     console.log("LOGOUT !!!")
     this.errorService.clear();
-    this.authService.logout();
+    //this.authService.logout();
+  }*/
+
+  public logout(): void {
+    this.isAuthenticated = this.keycloakService.isLoggedIn();
+    console.log("Is logged in? " + this.isAuthenticated);
+    console.log("LOGOUT !!!");
+    this.keycloakService.logout();
+    this.isAuthenticated = this.keycloakService.isLoggedIn();
+    console.log("Is logged in? " + this.isAuthenticated);
+  }
+
+  public isLoggedIn(): void {
+    //this.statusPanel = 'Is Logged In: ' + this.keycloakService.isLoggedIn();
+    console.log("LOGGED IN !!!");
   }
 
 }
