@@ -11,34 +11,21 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated = false;
+  private isAuthenticated = false;
   private keycloakService: KeycloakService;
   private errorService: ErrorService
 
-  constructor(/*private authService: AuthService,*/ errorService: ErrorService, keycloakService: KeycloakService) {
+  constructor(errorService: ErrorService, keycloakService: KeycloakService) {
     this.keycloakService = keycloakService;
     this.errorService = errorService;
   }
 
-  ngOnInit() {
-    /*this.authService.loggedIn$.subscribe(loggedIn => {
-      this.isLoggedIn = loggedIn;
-    });*/
-  }
-
-  /*logout() {
-    console.log("LOGOUT !!!")
-    this.errorService.clear();
-    //this.authService.logout();
-  }*/
+  ngOnInit() { }
 
   public logout(): void {
-    this.isAuthenticated = this.keycloakService.isLoggedIn();
-    console.log("Is logged in? " + this.isAuthenticated);
     console.log("LOGOUT !!!");
     this.keycloakService.logout();
-    this.isAuthenticated = this.keycloakService.isLoggedIn();
-    console.log("Is logged in? " + this.isAuthenticated);
+    this.keycloakService.clearToken();
   }
 
   public isLoggedIn(): void {

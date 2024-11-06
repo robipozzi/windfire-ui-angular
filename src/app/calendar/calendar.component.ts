@@ -3,19 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'home',
+  selector: 'calendar',
   imports: [CommonModule, RouterLink, RouterLinkActive],
   standalone: true,
-  templateUrl: './home.component.html'
+  templateUrl: './calendar.component.html'
 })
 
-export class HomeComponent implements OnInit {
-  isLoggedIn = false;
+export class CalendarComponent implements OnInit {
   welcomeMsg = "Welcome";
-  title = "Windfire UI Angular";
-  mainFunctionsLabel = "Main Functions";
-  restaurantsLabel = "Restaurants";
-  sensorsLabel = "Sensors";
+  title = "Windfire Calendar Events";
 
   constructor() { }
 

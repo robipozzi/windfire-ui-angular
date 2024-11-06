@@ -32,7 +32,7 @@ export class RestaurantAddComponent implements OnInit {
     this.submitted = false;
     this.errorService.clear();
   }
-  
+
   reset() {
     this.model = new Restaurant('', '', '', '', '', '', '');
   }

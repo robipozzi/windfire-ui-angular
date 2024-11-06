@@ -12,32 +12,3 @@ export const AuthGuard: CanActivateFn = (route, state) => {
     const router = inject(Router);
     return keycloakService.isLoggedIn();
 };
-
-// ======================================================================
-// ======================================================================
-
-/*import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
-import { Observable } from 'rxjs';
-
-@Injectable({
-    providedIn: 'root'
-})
-
-export class AuthGuard implements CanActivate {
-
-    constructor(private keycloakService: KeycloakService, private router: Router) { }
-
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<boolean> | Promise<boolean> | boolean {
-        if (this.keycloakService.isLoggedIn()) {
-            return true;
-        } else {
-            this.router.navigate(['/login']);
-            return false;
-        }
-    }
-}*/
