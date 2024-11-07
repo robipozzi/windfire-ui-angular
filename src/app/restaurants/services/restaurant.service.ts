@@ -1,38 +1,32 @@
 import { Injectable } from '@angular/core';
-//import { environment } from 'src/environments/environment';
-/*import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';*/
 import { ErrorService } from '../../error/services/error.service';
 import { Restaurant } from '../model/restaurant';
+import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 //import { AppConfigService } from 'src/app/app-config.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable({ providedIn: 'root' })
 export class RestaurantService {
   private restaurantServiceBaseUrl: string = "";
   private restaurantServiceEndpoint: string = "";
-  /*private httpOptions = {
-    headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-    })
-  };*/
 
-  constructor(/*private http: HttpClient,*/ private errorService: ErrorService, /*private appConfigService: AppConfigService*/) { 
+  constructor(private httpClient: HttpClient, private errorService: ErrorService, /*private appConfigService: AppConfigService*/) {
     this.setupEnv();
   }
 
-  /*getRestaurants(): Observable<string> {
+  getRestaurants(): Observable<Restaurant[]> {
     console.log('getRestaurants - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
-    return this.http.get<string>(this.restaurantServiceEndpoint, this.httpOptions)
+    return this.httpClient.get<Restaurant[]>(this.restaurantServiceEndpoint)
       .pipe(
-        tap(_ => console.log('Endpoint ' + this.restaurantServiceEndpoint + ' called, returning ...')),
-        catchError(this.errorService.handleError<string>('getRestaurants()', String())));
-  }*/
+        catchError(error => {
+          // Quality control catches the problem
+          console.error('Delivery problem:', error);
+          // Send an apology note or fix the issue
+          this.errorService.add('Oops! Something went wrong. Not able to fetch restaurants list, please try again later.')
+          return throwError(() => new Error('Oops! Something went wrong. Please try again later.'));
+        })
+      )
+  }
 
   /*addRestaurant(restaurant: Restaurant): Observable<Restaurant> {
     console.log('addRestaurant - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
@@ -62,10 +56,10 @@ export class RestaurantService {
   }
 
   private setupEnv() {
-    this.restaurantServiceBaseUrl = "xxx";
+    this.restaurantServiceBaseUrl = "http://localhost:8081";
     //this.restaurantServiceBaseUrl = this.appConfigService.getConfig().RESTAURANT_SVC_BASEURL
     console.log('restaurantServiceBaseUrl =  ' + this.restaurantServiceBaseUrl);
     this.restaurantServiceEndpoint = this.restaurantServiceBaseUrl + '/restaurants';
   }
-  
+
 }

@@ -19,9 +19,7 @@ export class RestaurantsComponent {
     restaurants: Restaurant[] = [];
     addFormView = false;
 
-    constructor(private restaurantService: RestaurantService, private errorService: ErrorService) {
-
-    }
+    constructor(private restaurantService: RestaurantService, private errorService: ErrorService) { }
 
     ngOnInit() {
         this.errorService.clear();
@@ -32,12 +30,6 @@ export class RestaurantsComponent {
         this.addFormView = true;
     }
 
-    delete(restaurant: Restaurant): void {
-        this.addFormView = false;
-        this.removeFromRestaurantsArray(restaurant.id);
-        //this.restaurantService.deleteRestaurant(restaurant.id).subscribe();
-    }
-
     getRestaurants(): void {
         /*if (environment.mock) {
             this.restaurants = this.restaurantService.getRestaurantsFake();
@@ -45,7 +37,31 @@ export class RestaurantsComponent {
             this.restaurantService.getRestaurants().subscribe(obj => this.processResponse(obj));
         }*/
         this.addFormView = false;
-        this.restaurants = this.restaurantService.getRestaurantsFake();
+        //this.restaurants = this.restaurantService.getRestaurantsFake();
+        // Fetch the list of restaurants when the component is initialized
+        this.restaurantService.getRestaurants().subscribe(
+            (data: Restaurant[]) => {
+                console.log("Restaurants list returned from RestaurantService, processing ...")
+                this.restaurants = data;  // Assign data to the restaurants array
+                //this.isLoading = false;   // Set loading to false after data is loaded
+            },
+            (error) => {
+                //this.isLoading = false;
+                //this.errorMessage = 'Failed to load restaurants';  // Handle error
+            }
+        );
+
+        /*let listOfRestaurants = this.restaurantService.getRestaurants();
+        listOfRestaurants.forEach(restaurant => {
+            console.log(restaurant.na)
+        });
+        console.log("listOfRestaurants = ", listOfRestaurants);*/
+    }
+
+    delete(restaurant: Restaurant): void {
+        this.addFormView = false;
+        this.removeFromRestaurantsArray(restaurant.id);
+        //this.restaurantService.deleteRestaurant(restaurant.id).subscribe();
     }
 
     private removeFromRestaurantsArray(id: string) {
