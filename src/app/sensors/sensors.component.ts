@@ -10,7 +10,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 
 export class SensorsComponent implements OnInit {
-  welcomeMsg = "Welcome";
   title = "Windfire Sensors";
   
   constructor() {}

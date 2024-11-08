@@ -10,7 +10,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 
 export class CalendarComponent implements OnInit {
-  welcomeMsg = "Welcome";
   title = "Windfire Calendar Events";
 
   constructor() { }

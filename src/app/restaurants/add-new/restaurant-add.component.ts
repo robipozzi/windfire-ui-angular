@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ErrorService } from '../../error/services/error.service';
 import { Restaurant } from '../model/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
+import { Address } from '../model/address';
 
 @Component({
   selector: 'restaurant-add-new',
@@ -15,7 +16,7 @@ export class RestaurantAddComponent implements OnInit {
   addNewRestaurantLabel = "Add New Restaurant"
   submitted = false;
   //model = new Restaurant('', '', 'Hostaria Vecchio Portico', 'Arona', 'Piazza del Popolo 23', '20000', 'Italian');
-  model = new Restaurant('', '', '', '', '', '', '');
+  //model = new Restaurant('', '', '', new Address(), '');
 
   constructor(private restaurantService: RestaurantService, private errorService: ErrorService) { }
 
@@ -34,7 +35,7 @@ export class RestaurantAddComponent implements OnInit {
   }
 
   reset() {
-    this.model = new Restaurant('', '', '', '', '', '', '');
+    //this.model = new Restaurant('', '', '', '', '', '', '');
   }
 
   processResponse(obj: Restaurant): void {

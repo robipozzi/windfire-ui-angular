@@ -10,12 +10,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 
 export class HomeComponent implements OnInit {
-  isLoggedIn = false;
   welcomeMsg = "Welcome";
   title = "Windfire UI Angular";
   mainFunctionsLabel = "Main Functions";
   restaurantsLabel = "Restaurants";
   sensorsLabel = "Sensors";
+  calendarLabel = "Calendar Events";
 
   constructor() { }
 

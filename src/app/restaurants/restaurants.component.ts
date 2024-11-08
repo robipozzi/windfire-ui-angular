@@ -41,21 +41,13 @@ export class RestaurantsComponent {
         // Fetch the list of restaurants when the component is initialized
         this.restaurantService.getRestaurants().subscribe(
             (data: Restaurant[]) => {
-                console.log("Restaurants list returned from RestaurantService, processing ...")
+                console.log("Restaurants list returned from RestaurantService, processing ... ", data)
                 this.restaurants = data;  // Assign data to the restaurants array
-                //this.isLoading = false;   // Set loading to false after data is loaded
             },
             (error) => {
-                //this.isLoading = false;
-                //this.errorMessage = 'Failed to load restaurants';  // Handle error
+                this.errorService.add('Failed to load restaurants')
             }
         );
-
-        /*let listOfRestaurants = this.restaurantService.getRestaurants();
-        listOfRestaurants.forEach(restaurant => {
-            console.log(restaurant.na)
-        });
-        console.log("listOfRestaurants = ", listOfRestaurants);*/
     }
 
     delete(restaurant: Restaurant): void {

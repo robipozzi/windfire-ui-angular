@@ -3,6 +3,7 @@ import { ErrorService } from '../../error/services/error.service';
 import { Restaurant } from '../model/restaurant';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Address } from '../model/address';
 //import { AppConfigService } from 'src/app/app-config.service';
 
 @Injectable({ providedIn: 'root' })
@@ -46,9 +47,9 @@ export class RestaurantService {
     console.log('Returning a fake Restaurant list');
     const restaurants: Restaurant[] = [];
     var index = 0;
-    var restaurant1 = new Restaurant('1', '1', 'Taverna del Pittore', 'Arona', 'Piazza del Popolo 39', '28041', 'Pesce');
-    var restaurant2 = new Restaurant('2', '2', 'La Corte del Re', 'Gallarate', 'Via Manzoni 1', '21013', 'Italian');
-    var restaurant3 = new Restaurant('3', '3', 'La Perla', 'Varese', 'Via Carrobbio 19', '21100', 'Pesce');
+    var restaurant1 = new Restaurant('1', '1', 'Taverna del Pittore', new Address('28041', 'Arona', 'Piazza del Popolo 39', 'NO', 'Piemonte', 'Italy'), 'Pesce');
+    var restaurant2 = new Restaurant('2', '2', 'La Corte del Re', new Address('21013', 'Gallarate', 'Via Manzoni, 1', 'VA', 'Lombardia', 'Italy'), 'Italian');
+    var restaurant3 = new Restaurant('3', '3', 'La Perla', new Address('21100', 'Varese', 'Via Carrobbio 19', 'VA', 'Lombardia', 'Italy'), 'Pesce');
     restaurants[index++] = restaurant1;
     restaurants[index++] = restaurant2;
     restaurants[index++] = restaurant3;
