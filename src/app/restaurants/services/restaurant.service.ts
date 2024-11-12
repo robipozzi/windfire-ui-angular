@@ -23,33 +23,52 @@ export class RestaurantService {
           // Quality control catches the problem
           console.error('Delivery problem:', error);
           // Send an apology note or fix the issue
-          this.errorService.add('Oops! Something went wrong. Not able to fetch restaurants list, please try again later.')
+          this.errorService.add('Oops! Something went wrong. Not able to fetch restaurants list, please try again later.');
           return throwError(() => new Error('Oops! Something went wrong. Please try again later.'));
         })
       )
   }
 
+  // ===== TO IMPLEMENT - START
+  addRestaurant(restaurant: Restaurant) {
+    console.log('addRestaurant - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
+    console.log("Restaurant to create ", restaurant);
+    this.httpClient.post<Restaurant>(this.restaurantServiceEndpoint, restaurant).subscribe(
+      restaurant => {
+        console.log('Restaurant added :', restaurant);
+    });
+  }
+  // ===== TO IMPLEMENT - END
+
   /*addRestaurant(restaurant: Restaurant): Observable<Restaurant> {
     console.log('addRestaurant - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
-    return this.http.post<Restaurant>(this.restaurantServiceEndpoint, restaurant, this.httpOptions)
+    return this.httpClient.post<Restaurant>(this.restaurantServiceEndpoint, restaurant, this.httpOptions)
       .pipe(
         catchError(this.errorService.handleError('addRestaurant', restaurant)));
   }*/
 
-  /*deleteRestaurant(id: string): Observable<{}> {
-    const url = `${this.restaurantServiceEndpoint}/${id}`;
-    return this.http.delete(url, this.httpOptions)
+  deleteRestaurant(restaurantId: string): Observable<void>{
+    console.log('deleteRestaurant - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
+    const url = `${this.restaurantServiceEndpoint}/${restaurantId}`; // Construct the URL with the restaurant ID
+    return this.httpClient.delete<void>(url)
       .pipe(
-        catchError(this.errorService.handleError('deleteRestaurant', id)));
-  }*/
+        catchError(error => {
+          // Quality control catches the problem
+          console.error('Delivery problem:', error);
+          // Send an apology note or fix the issue
+          this.errorService.add('Oops! Something went wrong. Not able to fetch restaurants list, please try again later.');
+          return throwError(() => new Error('Oops! Something went wrong. Please try again later.'));
+        })
+      )
+  }
 
   getRestaurantsFake(): Restaurant[] {
     console.log('Returning a fake Restaurant list');
     const restaurants: Restaurant[] = [];
     var index = 0;
-    var restaurant1 = new Restaurant('1', '1', 'Taverna del Pittore', new Address('28041', 'Arona', 'Piazza del Popolo 39', 'NO', 'Piemonte', 'Italy'), 'Pesce');
-    var restaurant2 = new Restaurant('2', '2', 'La Corte del Re', new Address('21013', 'Gallarate', 'Via Manzoni, 1', 'VA', 'Lombardia', 'Italy'), 'Italian');
-    var restaurant3 = new Restaurant('3', '3', 'La Perla', new Address('21100', 'Varese', 'Via Carrobbio 19', 'VA', 'Lombardia', 'Italy'), 'Pesce');
+    var restaurant1 = new Restaurant('1', 'Taverna del Pittore', new Address('28041', 'Arona', 'Piazza del Popolo 39', 'NO', 'Piemonte', 'Italy'), 'Pesce');
+    var restaurant2 = new Restaurant('2', 'La Corte del Re', new Address('21013', 'Gallarate', 'Via Manzoni, 1', 'VA', 'Lombardia', 'Italy'), 'Italian');
+    var restaurant3 = new Restaurant('3', 'La Perla', new Address('21100', 'Varese', 'Via Carrobbio 19', 'VA', 'Lombardia', 'Italy'), 'Pesce');
     restaurants[index++] = restaurant1;
     restaurants[index++] = restaurant2;
     restaurants[index++] = restaurant3;

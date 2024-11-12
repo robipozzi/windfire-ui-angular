@@ -1,74 +1,37 @@
-<!--div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center">
     <hr class="my-4">
     <div [hidden]="submitted">
         <h3>{{ addNewRestaurantLabel }}</h3>
         <div class="form-signin">
-            <form>
+            <form [formGroup]="newRestaurantForm" (ngSubmit)="add()">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" required [(ngModel)]="model.name"
-                        [ngModelOptions]="{standalone: true}" name="name">
+                    <label for="first-name">Resturant Name : </label>
+                    <input id="first-name" class="form-control" type="text" formControlName="name">
                 </div>
                 <div class="form-group">
-                    <label for="city">City</label>
-                    <input type="text" class="form-control" id="city" required [(ngModel)]="model.city"
-                        [ngModelOptions]="{standalone: true}" name="city">
+                    <label for="last-name">City : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="city">
                 </div>
                 <div class="form-group">
-                    <label for="zipcode">Zip Code</label>
-                    <input type="text" class="form-control" id="zipcode" [(ngModel)]="model.zipcode"
-                        [ngModelOptions]="{standalone: true}" name="zipcode">
+                    <label for="last-name">Zip Code : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="zipcode">
                 </div>
                 <div class="form-group">
-                    <label for="street">Street</label>
-                    <input type="text" class="form-control" id="street" required [(ngModel)]="model.street"
-                        [ngModelOptions]="{standalone: true}" name="street">
+                    <label for="last-name">Via / Piazza : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="street">
                 </div>
                 <div class="form-group">
-                    <label for="cuisine">Type of Cuisine</label>
-                    <input type="text" class="form-control" id="cuisine" [(ngModel)]="model.cuisine"
-                        [ngModelOptions]="{standalone: true}" name="cuisine">
+                    <label for="last-name">Tipo cucina : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="cuisine">
                 </div>
                 <br>
                 <div class="d-flex justify-content-center">
                     <p class="d-inline-flex gap-1">
-                        <a class="btn btn-success btn-sm" role="button" (click)="add()">Submit</a>
+                        <button type="submit" class="btn btn-success btn-sm" [disabled]="!newRestaurantForm.valid">Add</button>
                         <a class="btn btn-success btn-sm" role="button" (click)="reset()">Reset</a>
+                        <!--button class="btn btn-primary" (click)="edit()">Edit</button-->
                     </p>
                 </div>
             </form>
-        </div>
     </div>
-    <div [hidden]="!submitted">
-        <h2>You submitted the following:</h2>
-        <div class="row">
-            <div class="col-xs-3">Name: </div>
-            <div class="col-xs-9">{{ model.name }} </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">City: </div>
-            <div class="col-xs-9">{{ model.city }}</div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">Zip Code: </div>
-            <div class="col-xs-9">{{ model.zipcode }}</div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">Street: </div>
-            <div class="col-xs-9">{{ model.street }}</div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">Type of Cuisine: </div>
-            <div class="col-xs-9">{{ model.cuisine }}</div>
-        </div>
-        <br>
-        <div class="d-flex justify-content-center">
-            <p class="d-inline-flex gap-1">
-                <a class="btn btn-success btn-sm" role="button" (click)="add()">Submit</a>
-                <a class="btn btn-success btn-sm" role="button" (click)="reset()">Reset</a>
-                <a class="btn btn-primary" routerLink="/restaurants" role="button">Back to My Restaurants List</a>
-                <button class="btn btn-primary" (click)="edit()">Edit</button>
-            </p>
-        </div>
-    </div>
-</div-->
+</div>

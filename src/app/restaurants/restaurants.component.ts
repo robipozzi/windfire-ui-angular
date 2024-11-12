@@ -42,18 +42,32 @@ export class RestaurantsComponent {
         this.restaurantService.getRestaurants().subscribe(
             (data: Restaurant[]) => {
                 console.log("Restaurants list returned from RestaurantService, processing ... ", data)
-                this.restaurants = data;  // Assign data to the restaurants array
+                // Assign data to the restaurants array
+                this.restaurants = data;
             },
             (error) => {
-                this.errorService.add('Failed to load restaurants')
+                // Handle error (e.g., show an error message)
+                console.error('Failed to load restaurants:', error);
+                this.errorService.add('Failed to load restaurants');
             }
         );
     }
 
     delete(restaurant: Restaurant): void {
         this.addFormView = false;
-        this.removeFromRestaurantsArray(restaurant.id);
-        //this.restaurantService.deleteRestaurant(restaurant.id).subscribe();
+        let restaurantId = restaurant.id;
+        this.restaurantService.deleteRestaurant(restaurantId).subscribe({
+            next: () => {
+              // Handle successful deletion (e.g., remove from local list or show a message)
+              console.log(`Restaurant with ID ${restaurantId} deleted successfully.`);
+              this.removeFromRestaurantsArray(restaurantId);
+            },
+            error: (err) => {
+              // Handle error (e.g., show an error message)
+              console.error('Error deleting restaurant:', err);
+              this.errorService.add('Error deleting restaurant');
+            }
+        });
     }
 
     private removeFromRestaurantsArray(id: string) {

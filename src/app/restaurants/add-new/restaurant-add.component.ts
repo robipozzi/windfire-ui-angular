@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { ErrorService } from '../../error/services/error.service';
 import { Restaurant } from '../model/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
@@ -7,7 +9,7 @@ import { Address } from '../model/address';
 
 @Component({
   selector: 'restaurant-add-new',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   standalone: true,
   templateUrl: './restaurant-add.component.html'
 })
@@ -15,8 +17,14 @@ import { Address } from '../model/address';
 export class RestaurantAddComponent implements OnInit {
   addNewRestaurantLabel = "Add New Restaurant"
   submitted = false;
-  //model = new Restaurant('', '', 'Hostaria Vecchio Portico', 'Arona', 'Piazza del Popolo 23', '20000', 'Italian');
-  //model = new Restaurant('', '', '', new Address(), '');
+
+  newRestaurantForm = new FormGroup({
+    name: new FormControl(''),
+    city: new FormControl(''),
+    zipcode: new FormControl(''),
+    street: new FormControl(''),
+    cuisine: new FormControl(''),
+  });
 
   constructor(private restaurantService: RestaurantService, private errorService: ErrorService) { }
 
@@ -26,7 +34,17 @@ export class RestaurantAddComponent implements OnInit {
 
   add(): void {
     this.submitted = true;
+    console.warn(this.newRestaurantForm.value);
+    //constructor( _id: string, _name: string, _address: Address, _cuisine: string )
+    let restaurant:Restaurant = new Restaurant("", "Pippo Burger", 
+                                              new Address("21013", "Gallarate", "Piazza Libertà", "VA", "Lombardia", "Italia"),
+                                              "Lombarda")
+    /*let restaurant:Restaurant = new Restaurant("", 
+                                                this.newRestaurantForm.value.name, 
+                                                new Address("", "", "", "", "", ""), 
+                                                this.newRestaurantForm.value.cuisine);*/
     //this.restaurantService.addRestaurant(this.model).subscribe(obj => this.processResponse(obj));
+    this.restaurantService.addRestaurant(restaurant);
   }
 
   edit(): void {
@@ -36,11 +54,6 @@ export class RestaurantAddComponent implements OnInit {
 
   reset() {
     //this.model = new Restaurant('', '', '', '', '', '', '');
-  }
-
-  processResponse(obj: Restaurant): void {
-    console.log("######## restaurant-add.processResponse() - obj = ");
-    console.log(obj);
   }
 
 }
