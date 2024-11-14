@@ -26,10 +26,6 @@ export class RestaurantsComponent {
         this.getRestaurants();
     }
 
-    openAddRestaurantForm(): void {
-        this.addFormView = true;
-    }
-
     getRestaurants(): void {
         /*if (environment.mock) {
             this.restaurants = this.restaurantService.getRestaurantsFake();
@@ -53,9 +49,17 @@ export class RestaurantsComponent {
         );
     }
 
+    openAddRestaurantForm(): void {
+        console.log("addFormView is ", this.addFormView);
+        console.log("openAddRestaurantForm()");
+        this.addFormView = true;
+        console.log("addFormView is ", this.addFormView);
+    }
+
     delete(restaurant: Restaurant): void {
         this.addFormView = false;
-        let restaurantId = restaurant.id;
+        let restaurantId: string | null;
+        restaurantId = restaurant.id;
         this.restaurantService.deleteRestaurant(restaurantId).subscribe({
             next: () => {
               // Handle successful deletion (e.g., remove from local list or show a message)
@@ -70,32 +74,8 @@ export class RestaurantsComponent {
         });
     }
 
-    private removeFromRestaurantsArray(id: string) {
+    private removeFromRestaurantsArray(id: string | null) {
         this.restaurants = this.restaurants.filter(item => item.id !== id);
     }
 
-    /* processResponse(obj: string): void {
-         console.log("######## restaurant.processResponse() - obj = ");
-         console.log(obj);
-         const jsonObj = JSON.parse(JSON.stringify(obj));
-         console.log("######## restaurant.processResponse() - jsonObj = ");
-         console.log(jsonObj);
-         const errorMsg = jsonObj.error;
-         if (errorMsg != undefined) {
-             this.errorService.add(errorMsg);
-         } else {
-             const restaurantObjArray = jsonObj;
-             let index = 0;
-             try {
-                 restaurantObjArray.forEach(response => {
-                     console.log("######## restaurant.processResponse() - response = ");
-                     console.log(response);
-                     const restaurant: Restaurant = new Restaurant(response._id, response.restaurant_id, response.name, (response.borough || response.city), response.address.street, response.address.zipcode, response.cuisine);
-                     this.restaurants[index++] = restaurant;
-                 });
-             } catch (error) {
-                 this.errorService.add("GENERIC ERROR : Something went wrong while processing response from RestaurantService");
-             }
-         }
-     }*/
 }

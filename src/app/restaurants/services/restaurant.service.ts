@@ -47,7 +47,7 @@ export class RestaurantService {
         catchError(this.errorService.handleError('addRestaurant', restaurant)));
   }*/
 
-  deleteRestaurant(restaurantId: string): Observable<void>{
+  deleteRestaurant(restaurantId: string | null): Observable<void>{
     console.log('deleteRestaurant - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
     const url = `${this.restaurantServiceEndpoint}/${restaurantId}`; // Construct the URL with the restaurant ID
     return this.httpClient.delete<void>(url)

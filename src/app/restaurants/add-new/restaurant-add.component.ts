@@ -16,12 +16,22 @@ import { Address } from '../model/address';
 
 export class RestaurantAddComponent implements OnInit {
   addNewRestaurantLabel = "Add New Restaurant"
+  restaurantNameLabel = "Restaurant Name";
+  cityLabel = "City";
+  zipcodeLabel = "Zip Code";
+  provinceLabel = "Province";
+  regionLabel = "Region";
+  countryLabel = "Country";
+  streetLabel = "Street / Square";
+  cuisineLabel = "Cuisine Type";
   submitted = false;
-
   newRestaurantForm = new FormGroup({
     name: new FormControl(''),
     city: new FormControl(''),
     zipcode: new FormControl(''),
+    province: new FormControl(''),
+    region: new FormControl(''),
+    country: new FormControl(''),
     street: new FormControl(''),
     cuisine: new FormControl(''),
   });
@@ -35,15 +45,15 @@ export class RestaurantAddComponent implements OnInit {
   add(): void {
     this.submitted = true;
     console.warn(this.newRestaurantForm.value);
-    //constructor( _id: string, _name: string, _address: Address, _cuisine: string )
-    let restaurant:Restaurant = new Restaurant("", "Pippo Burger", 
-                                              new Address("21013", "Gallarate", "Piazza Libertà", "VA", "Lombardia", "Italia"),
-                                              "Lombarda")
-    /*let restaurant:Restaurant = new Restaurant("", 
+    let restaurant:Restaurant = new Restaurant("", 
                                                 this.newRestaurantForm.value.name, 
-                                                new Address("", "", "", "", "", ""), 
-                                                this.newRestaurantForm.value.cuisine);*/
-    //this.restaurantService.addRestaurant(this.model).subscribe(obj => this.processResponse(obj));
+                                                new Address(this.newRestaurantForm.value.zipcode, 
+                                                            this.newRestaurantForm.value.city, 
+                                                            this.newRestaurantForm.value.street, 
+                                                            this.newRestaurantForm.value.province, 
+                                                            this.newRestaurantForm.value.region, 
+                                                            "Italia"), 
+                                                this.newRestaurantForm.value.cuisine);
     this.restaurantService.addRestaurant(restaurant);
   }
 
