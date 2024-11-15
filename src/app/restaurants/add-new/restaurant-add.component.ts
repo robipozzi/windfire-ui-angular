@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { ErrorService } from '../../error/services/error.service';
 import { Restaurant } from '../model/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
+import { RestaurantAddController } from '../controllers/restaurant-add.controller';
 import { Address } from '../model/address';
 
 @Component({
@@ -23,6 +24,10 @@ export class RestaurantAddComponent implements OnInit {
   regionLabel = "Region";
   countryLabel = "Country";
   streetLabel = "Street / Square";
+  phoneLabel = "Phone";
+  mobileLabel = "Mobile";
+  emailLabel = "Email";
+  websiteLabel = "Website";
   cuisineLabel = "Cuisine Type";
   submitted = false;
   newRestaurantForm = new FormGroup({
@@ -33,17 +38,23 @@ export class RestaurantAddComponent implements OnInit {
     region: new FormControl(''),
     country: new FormControl(''),
     street: new FormControl(''),
+    phone: new FormControl(''),
+    mobile: new FormControl(''),
+    email: new FormControl(''),
+    website: new FormControl(''),
     cuisine: new FormControl(''),
   });
+  newRestaurantName: string | null | undefined;
+  newRestaurantAddedMsg = "";
 
-  constructor(private restaurantService: RestaurantService, private errorService: ErrorService) { }
+  constructor(private restaurantService: RestaurantService, private restaurantAddController: RestaurantAddController, private errorService: ErrorService) { }
 
   ngOnInit(): void {
     this.errorService.clear();
   }
 
   add(): void {
-    this.submitted = true;
+    this.errorService.clear();
     console.warn(this.newRestaurantForm.value);
     let restaurant:Restaurant = new Restaurant("", 
                                                 this.newRestaurantForm.value.name, 
@@ -52,18 +63,41 @@ export class RestaurantAddComponent implements OnInit {
                                                             this.newRestaurantForm.value.street, 
                                                             this.newRestaurantForm.value.province, 
                                                             this.newRestaurantForm.value.region, 
-                                                            "Italia"), 
+                                                            "Italia"),
+                                                this.newRestaurantForm.value.phone,
+                                                this.newRestaurantForm.value.mobile,
+                                                this.newRestaurantForm.value.email,
+                                                this.newRestaurantForm.value.website,
                                                 this.newRestaurantForm.value.cuisine);
-    this.restaurantService.addRestaurant(restaurant);
+    // Add a new restaurant
+    this.restaurantService.addRestaurant(restaurant).subscribe(
+      (response) => {
+        console.log('Restaurant added successfully:', response);
+        this.setSubmitted(true);
+        this.newRestaurantName = restaurant.name;
+        this.newRestaurantAddedMsg = "Form submitted, new restaurant " + this.newRestaurantName + " has been added";
+        this.newRestaurantForm.reset();
+      },
+      (error) => {
+        console.error('RestaurantAddComponent.add() --> Failed to add new restaurant');
+        this.errorService.add('Oops! Something went wrong. Not able to add new restaurant, please try again later.');
+      }
+    );
   }
 
   edit(): void {
-    this.submitted = false;
+    this.setSubmitted(false);
     this.errorService.clear();
   }
 
   reset() {
-    //this.model = new Restaurant('', '', '', '', '', '', '');
+    this.newRestaurantForm.reset();
+    this.setSubmitted(false);
+  }
+
+  private setSubmitted(isSubmitted: boolean) {
+    this.restaurantAddController.setSubmittedState(isSubmitted);
+    this.submitted = isSubmitted;
   }
 
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ErrorService } from '../error/services/error.service';
 
 @Component({
   selector: 'sensors',
@@ -12,8 +13,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class SensorsComponent implements OnInit {
   title = "Windfire Sensors";
   
-  constructor() {}
+  constructor(private errorService: ErrorService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.errorService.clear();
+  }
 
 }

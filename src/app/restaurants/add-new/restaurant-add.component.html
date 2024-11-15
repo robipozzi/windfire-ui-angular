@@ -1,10 +1,72 @@
 <div class="d-flex justify-content-center">
-    <hr class="my-4">
-    <div [hidden]="submitted">
-        <h3>{{ addNewRestaurantLabel }}</h3>
+    <div>
+        <div class="py-5 text-center" >
+            <h3>{{ addNewRestaurantLabel }}</h3>
+        </div>
+        @if(submitted){
+            <div class="bg-light text-center text-danger font-weight-bold">{{ newRestaurantAddedMsg }}</div>
+        }
         <div class="form-signin">
             <form [formGroup]="newRestaurantForm" (ngSubmit)="add()">
-                <div class="form-group">
+                <div class="row g-3">
+                    <div class="col-sm-3">
+                        <label for="first-name">{{ restaurantNameLabel }} : </label>
+                        <input id="first-name" class="form-control" type="text" formControlName="name">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ cityLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="city">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ zipcodeLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="zipcode">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ provinceLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="province">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ regionLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="region">
+                    </div>
+                    <!--div class="col-sm-3">
+                        <label for="last-name">{{ countryLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="country">
+                    </div-->
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ streetLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="street">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ phoneLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="phone">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ mobileLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="mobile">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ emailLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="email">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ websiteLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="website">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last-name">{{ cuisineLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="cuisine">
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <p class="d-inline-flex gap-1">
+                            <button type="submit" class="btn btn-success btn-sm" [disabled]="!newRestaurantForm.valid">Add</button>
+                            <a class="btn btn-success btn-sm" role="button" (click)="reset()">Reset</a>
+                            <!--button class="btn btn-primary" (click)="edit()">Edit</button-->
+                        </p>
+                    </div>
+                </div>
+                <!--div class="form-group">
                     <label for="first-name">{{ restaurantNameLabel }} : </label>
                     <input id="first-name" class="form-control" type="text" formControlName="name">
                 </div>
@@ -23,12 +85,12 @@
                 <div class="form-group">
                     <label for="last-name">{{ regionLabel }} : </label>
                     <input id="last-name" class="form-control" type="text" formControlName="region">
-                </div>
+                </div-->
                 <!--div class="form-group">
                     <label for="last-name">{{ countryLabel }} : </label>
                     <input id="last-name" class="form-control" type="text" formControlName="country">
                 </div-->
-                <div class="form-group">
+                <!--div class="form-group">
                     <label for="last-name">{{ streetLabel }} : </label>
                     <input id="last-name" class="form-control" type="text" formControlName="street">
                 </div>
@@ -41,9 +103,10 @@
                     <p class="d-inline-flex gap-1">
                         <button type="submit" class="btn btn-success btn-sm" [disabled]="!newRestaurantForm.valid">Add</button>
                         <a class="btn btn-success btn-sm" role="button" (click)="reset()">Reset</a>
-                        <!--button class="btn btn-primary" (click)="edit()">Edit</button-->
+                        <button class="btn btn-primary" (click)="edit()">Edit</button>
                     </p>
-                </div>
+                </div-->
             </form>
     </div>
+    <!--/div-->
 </div>

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ErrorService } from '../error/services/error.service';
 
 @Component({
   selector: 'calendar',
@@ -12,8 +13,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class CalendarComponent implements OnInit {
   title = "Windfire Calendar Events";
 
-  constructor() { }
+  constructor(private errorService: ErrorService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.errorService.clear();
+  }
 
 }

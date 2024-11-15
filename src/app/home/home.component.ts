@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ErrorService } from '../error/services/error.service';
 
 @Component({
   selector: 'home',
@@ -17,8 +18,10 @@ export class HomeComponent implements OnInit {
   sensorsLabel = "Sensors";
   calendarLabel = "Calendar Events";
 
-  constructor() { }
+  constructor(private errorService: ErrorService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.errorService.clear();
+  }
 
 }

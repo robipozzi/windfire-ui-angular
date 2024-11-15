@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ErrorService } from '../../error/services/error.service';
 import { Restaurant } from '../model/restaurant';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Address } from '../model/address';
 //import { AppConfigService } from 'src/app/app-config.service';
@@ -17,35 +17,32 @@ export class RestaurantService {
 
   getRestaurants(): Observable<Restaurant[]> {
     console.log('getRestaurants - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
-    return this.httpClient.get<Restaurant[]>(this.restaurantServiceEndpoint)
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.get<Restaurant[]>(this.restaurantServiceEndpoint, { headers })
       .pipe(
         catchError(error => {
           // Quality control catches the problem
-          console.error('Delivery problem:', error);
+          console.error('RestaurantService.getRestaurants() --> Error during REST API call : ', error.message);
           // Send an apology note or fix the issue
-          this.errorService.add('Oops! Something went wrong. Not able to fetch restaurants list, please try again later.');
-          return throwError(() => new Error('Oops! Something went wrong. Please try again later.'));
+          return throwError(() => new Error(error));
         })
       )
   }
 
-  // ===== TO IMPLEMENT - START
-  addRestaurant(restaurant: Restaurant) {
+  addRestaurant(restaurant: Restaurant): Observable<Restaurant> {
     console.log('addRestaurant - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
     console.log("Restaurant to create ", restaurant);
-    this.httpClient.post<Restaurant>(this.restaurantServiceEndpoint, restaurant).subscribe(
-      restaurant => {
-        console.log('Restaurant added :', restaurant);
-    });
-  }
-  // ===== TO IMPLEMENT - END
-
-  /*addRestaurant(restaurant: Restaurant): Observable<Restaurant> {
-    console.log('addRestaurant - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
-    return this.httpClient.post<Restaurant>(this.restaurantServiceEndpoint, restaurant, this.httpOptions)
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post<Restaurant>(this.restaurantServiceEndpoint, restaurant, { headers })
       .pipe(
-        catchError(this.errorService.handleError('addRestaurant', restaurant)));
-  }*/
+        catchError(error => {
+          // Quality control catches the problem
+          console.error('RestaurantService.addRestaurant() --> Error during REST API call : ', error.message);
+          // Send an apology note or fix the issue
+          return throwError(() => new Error(error));
+        })
+      );
+  }
 
   deleteRestaurant(restaurantId: string | null): Observable<void>{
     console.log('deleteRestaurant - Calling Restaurant Service Endpoint @ ' + this.restaurantServiceEndpoint);
@@ -54,10 +51,9 @@ export class RestaurantService {
       .pipe(
         catchError(error => {
           // Quality control catches the problem
-          console.error('Delivery problem:', error);
+          console.error('RestaurantService.deleteRestaurant() --> Error during REST API call : ', error.message);
           // Send an apology note or fix the issue
-          this.errorService.add('Oops! Something went wrong. Not able to fetch restaurants list, please try again later.');
-          return throwError(() => new Error('Oops! Something went wrong. Please try again later.'));
+          return throwError(() => new Error(error));
         })
       )
   }
@@ -66,9 +62,9 @@ export class RestaurantService {
     console.log('Returning a fake Restaurant list');
     const restaurants: Restaurant[] = [];
     var index = 0;
-    var restaurant1 = new Restaurant('1', 'Taverna del Pittore', new Address('28041', 'Arona', 'Piazza del Popolo 39', 'NO', 'Piemonte', 'Italy'), 'Pesce');
-    var restaurant2 = new Restaurant('2', 'La Corte del Re', new Address('21013', 'Gallarate', 'Via Manzoni, 1', 'VA', 'Lombardia', 'Italy'), 'Italian');
-    var restaurant3 = new Restaurant('3', 'La Perla', new Address('21100', 'Varese', 'Via Carrobbio 19', 'VA', 'Lombardia', 'Italy'), 'Pesce');
+    var restaurant1 = new Restaurant('1', 'Taverna del Pittore', new Address('28041', 'Arona', 'Piazza del Popolo 39', 'NO', 'Piemonte', 'Italy'), '0331212121', '34567890123', 'pippo@pluto.com', 'www.paperino.minni', 'Pesce');
+    var restaurant2 = new Restaurant('2', 'La Corte del Re', new Address('21013', 'Gallarate', 'Via Manzoni, 1', 'VA', 'Lombardia', 'Italy'), '0331212121', '34567890123', 'pippo@pluto.com', 'www.paperino.minni', 'Italian');
+    var restaurant3 = new Restaurant('3', 'La Perla', new Address('21100', 'Varese', 'Via Carrobbio 19', 'VA', 'Lombardia', 'Italy'), '0331212121', '34567890123', 'pippo@pluto.com', 'www.paperino.minni', 'Pesce');
     restaurants[index++] = restaurant1;
     restaurants[index++] = restaurant2;
     restaurants[index++] = restaurant3;
