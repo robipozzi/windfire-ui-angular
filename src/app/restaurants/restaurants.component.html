@@ -37,7 +37,14 @@
         <td>{{restaurant.name}}</td>
         <td>{{restaurant.address.street}} - {{restaurant.address.zipCode}} {{restaurant.address.city}}</td>
         <td>{{restaurant.cuisine}}</td>
-        <td><button class="btn btn-primary" (click)="deleteRestaurant(restaurant)">Delete</button></td>
+        <td>
+            <button class="btn btn-primary" (click)="deleteRestaurant(restaurant)">Delete</button>
+            <button class="btn btn-primary" (click)="edit(restaurant)">Edit</button>
+            <!--p class="d-inline-flex gap-1">
+              <button class="btn btn-primary" (click)="deleteRestaurant(restaurant)">Delete</button>
+              <button class="btn btn-primary" (click)="edit()">Edit</button>
+            </p-->
+        </td>
       </tr>
       }
     </tbody>

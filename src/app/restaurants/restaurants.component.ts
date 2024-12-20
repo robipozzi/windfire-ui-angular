@@ -53,15 +53,7 @@ export class RestaurantsComponent {
 
     openAddRestaurantForm(): void {
         console.log("openAddRestaurantForm()");
-        console.warn("addFormView is ", this.addFormView);
-        this.restaurantAddController.formSubmitted$.subscribe((formSubmitted) => {
-            console.log("is form submitted ? ", formSubmitted);
-            if (formSubmitted) {
-              this.restaurantAddController.setSubmittedState(false);
-            }
-        });
-        this.addFormView = true;
-        console.warn("addFormView is ", this.addFormView);
+        this.handleAddRestaurantFormView();
     }
 
     deleteRestaurant(restaurant: Restaurant): void {
@@ -82,6 +74,26 @@ export class RestaurantsComponent {
             }
         });
     }
+
+    edit(restaurant: Restaurant): void {
+        this.errorService.clear();
+        //this.errorService.add("Edit functionality is not implemented yet");
+        console.log("edit()");
+        console.log("Editing restaurant ", restaurant);
+        this.handleAddRestaurantFormView();
+    }
+
+    private handleAddRestaurantFormView() {
+        console.warn("addFormView is ", this.addFormView);
+        this.restaurantAddController.formSubmitted$.subscribe((formSubmitted) => {
+            console.log("is form submitted ? ", formSubmitted);
+            if (formSubmitted) {
+              this.restaurantAddController.setSubmittedState(false);
+            }
+        });
+        this.addFormView = true;
+        console.warn("addFormView is ", this.addFormView);
+    } 
 
     private removeFromRestaurantsArray(id: string | null) {
         this.restaurants = this.restaurants.filter(item => item.id !== id);

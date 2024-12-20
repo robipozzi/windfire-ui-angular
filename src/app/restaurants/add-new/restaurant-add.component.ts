@@ -181,11 +181,6 @@ export class RestaurantAddComponent implements OnInit {
     );
   }
 
-  edit(): void {
-    this.setSubmitted(false);
-    this.errorService.clear();
-  }
-
   reset() {
     this.newRestaurantForm.reset();
     this.setSubmitted(false);
