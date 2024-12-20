@@ -151,6 +151,7 @@ export class RestaurantAddComponent implements OnInit {
   add(): void {
     this.errorService.clear();
     console.warn(this.newRestaurantForm.value);
+    this.newRestaurantForm.get('street')?.setValue(this.newRestaurantForm.value.street + ', ' + this.newRestaurantForm.value.streetNumber);
     let restaurant:Restaurant = new Restaurant("", 
                                                 this.newRestaurantForm.value.name, 
                                                 new Address(this.newRestaurantForm.value.zipcode,
