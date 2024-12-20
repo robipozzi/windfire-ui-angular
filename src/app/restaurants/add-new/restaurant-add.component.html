@@ -4,7 +4,9 @@
             <h3>{{ addNewRestaurantLabel }}</h3>
         </div>
         @if(submitted){
-            <div class="bg-light text-center text-danger font-weight-bold">{{ newRestaurantAddedMsg }}</div>
+            <div class="bg-light text-center">
+                <p class="fw-bold text-success">{{ newRestaurantAddedMsg }}</p>
+            </div>
         }
         <div class="form-signin">
             <form [formGroup]="newRestaurantForm" (ngSubmit)="add()">

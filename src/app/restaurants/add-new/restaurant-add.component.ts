@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { FormControl } from '@angular/forms';
 import { ErrorService } from '../../error/services/error.service';
 import { Restaurant } from '../model/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
@@ -30,6 +29,7 @@ interface AddressComponent {
 })
 
 export class RestaurantAddComponent implements OnInit {
+  private mapsServiceProxyBaseUrl: string = "";
   addNewRestaurantLabel = "Add New Restaurant"
   restaurantNameLabel = "Restaurant Name";
   fullAddress = "Address";
@@ -47,24 +47,11 @@ export class RestaurantAddComponent implements OnInit {
   submitted = false;
   newRestaurantForm: FormGroup;
   predictions: PlacePrediction[] = [];
-  /*newRestaurantForm = new FormGroup({
-    name: new FormControl(''),
-    city: new FormControl(''),
-    zipcode: new FormControl(''),
-    province: new FormControl(''),
-    region: new FormControl(''),
-    country: new FormControl(''),
-    street: new FormControl(''),
-    phone: new FormControl(''),
-    mobile: new FormControl(''),
-    email: new FormControl(''),
-    website: new FormControl(''),
-    cuisine: new FormControl(''),
-  });*/
   newRestaurantName: string | null | undefined;
   newRestaurantAddedMsg = "";
 
   constructor(private fb: FormBuilder, private http: HttpClient, private restaurantService: RestaurantService, private restaurantAddController: RestaurantAddController, private errorService: ErrorService) { 
+    this.setupEnv();
     this.newRestaurantForm = this.fb.group({
       name: [''],
       fullAddress: [''],
@@ -89,7 +76,6 @@ export class RestaurantAddComponent implements OnInit {
   }
 
   setupAddressAutocomplete() {
-    console.log('+++++++ setupAddressAutocomplete()');
     this.newRestaurantForm.get('fullAddress')?.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -107,13 +93,12 @@ export class RestaurantAddComponent implements OnInit {
   }
 
   fetchAutocomplete(input: string) {
-    console.log('+++++++ fetchAutocomplete() --> input:', input);
-    return this.http.get<{predictions: PlacePrediction[]}>(`http://localhost:3000/api/places/autocomplete?input=${input}`);
+    return this.http.get<{predictions: PlacePrediction[]}>(this.mapsServiceProxyBaseUrl + `/api/places/autocomplete?input=${input}`);
   }
 
   selectAddress(prediction: PlacePrediction) {
     this.http.get<{result: {address_components: AddressComponent[], formatted_address: string}}>(
-      `http://localhost:3000/api/places/details?placeid=${prediction.place_id}`
+      this.mapsServiceProxyBaseUrl + `/api/places/details?placeid=${prediction.place_id}`
     ).subscribe(response => {
       const addressComponents = response.result.address_components;
       
@@ -208,6 +193,12 @@ export class RestaurantAddComponent implements OnInit {
   private setSubmitted(isSubmitted: boolean) {
     this.restaurantAddController.setSubmittedState(isSubmitted);
     this.submitted = isSubmitted;
+  }
+
+  private setupEnv() {
+    this.mapsServiceProxyBaseUrl = "http://localhost:3000";
+    //this.restaurantServiceBaseUrl = this.appConfigService.getConfig().RESTAURANT_SVC_BASEURL
+    console.log('mapsServiceProxyBaseUrl =  ' + this.mapsServiceProxyBaseUrl);
   }
 
 }
