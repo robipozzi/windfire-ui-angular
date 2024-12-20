@@ -1,0 +1,191 @@
+<form [formGroup]="newRestaurantForm" (ngSubmit)="add()">
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label for="first-name">{{ restaurantNameLabel }} : </label>
+            <input id="first-name" class="form-control" type="text" formControlName="name">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ cityLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="city">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ zipcodeLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="zipcode">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ provinceLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="province">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ regionLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="region">
+        </div>
+        <!--div class="col-sm-3">
+                        <label for="last-name">{{ countryLabel }} : </label>
+                        <input id="last-name" class="form-control" type="text" formControlName="country">
+                    </div-->
+        <div class="col-sm-3">
+            <label for="last-name">{{ streetLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="street">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ phoneLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="phone">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ mobileLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="mobile">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ emailLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="email">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ websiteLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="website">
+        </div>
+        <div class="col-sm-3">
+            <label for="last-name">{{ cuisineLabel }} : </label>
+            <input id="last-name" class="form-control" type="text" formControlName="cuisine">
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <p class="d-inline-flex gap-1">
+                <button type="submit" class="btn btn-success btn-sm" [disabled]="!newRestaurantForm.valid">Add</button>
+                <a class="btn btn-success btn-sm" role="button" (click)="reset()">Reset</a>
+                <!--button class="btn btn-primary" (click)="edit()">Edit</button-->
+            </p>
+        </div>
+    </div>
+    <!--div class="form-group">
+                    <label for="first-name">{{ restaurantNameLabel }} : </label>
+                    <input id="first-name" class="form-control" type="text" formControlName="name">
+                </div>
+                <div class="form-group">
+                    <label for="last-name">{{ cityLabel }} : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="city">
+                </div>
+                <div class="form-group">
+                    <label for="last-name">{{ zipcodeLabel }} : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="zipcode">
+                </div>
+                <div class="form-group">
+                    <label for="last-name">{{ provinceLabel }} : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="province">
+                </div>
+                <div class="form-group">
+                    <label for="last-name">{{ regionLabel }} : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="region">
+                </div-->
+    <!--div class="form-group">
+                    <label for="last-name">{{ countryLabel }} : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="country">
+                </div-->
+    <!--div class="form-group">
+                    <label for="last-name">{{ streetLabel }} : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="street">
+                </div>
+                <div class="form-group">
+                    <label for="last-name">{{ cuisineLabel }} : </label>
+                    <input id="last-name" class="form-control" type="text" formControlName="cuisine">
+                </div>
+                <br>
+                <div class="d-flex justify-content-center">
+                    <p class="d-inline-flex gap-1">
+                        <button type="submit" class="btn btn-success btn-sm" [disabled]="!newRestaurantForm.valid">Add</button>
+                        <a class="btn btn-success btn-sm" role="button" (click)="reset()">Reset</a>
+                        <button class="btn btn-primary" (click)="edit()">Edit</button>
+                    </p>
+                </div-->
+</form>
+
+============================================================================================
+============================================================================================
+============================================================================================
+
+<form [formGroup]="newRestaurantForm" class="needs-validation" novalidate>
+    <div class="mb-3">
+      <label for="fullAddress" class="form-label">Full Address</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="fullAddress" 
+        formControlName="fullAddress" 
+        autocomplete="on"
+      >
+
+    @if(predictions.length > 0){
+        <ul class="list-group">
+            @for(prediction of predictions; track prediction.place_id){
+                <li 
+                  class="list-group-item list-group-item-action"
+                  (click)="selectAddress(prediction)"
+                >
+                  {{ prediction.description }}
+                </li>
+            }
+          </ul>
+    }
+    </div>
+  
+    <div class="row">
+      <div class="col-md-2 mb-3">
+        <label for="streetNumber" class="form-label">Street Number</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="streetNumber" 
+          formControlName="streetNumber"
+        >
+      </div>
+      <div class="col-md-10 mb-3">
+        <label for="street" class="form-label">Street</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="street" 
+          formControlName="street"
+        >
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label for="city" class="form-label">City</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="city" 
+          formControlName="city"
+        >
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="province" class="form-label">Province/State</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="province" 
+          formControlName="province"
+        >
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="zipcode" class="form-label">Postal Code</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="zipcode" 
+          formControlName="zipcode"
+        >
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="country" class="form-label">Country</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="country" 
+        formControlName="country"
+      >
+    </div>
+</form>
