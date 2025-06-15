@@ -9,7 +9,7 @@ run()
     # It uses the configuration defined in one of the 2 files environment files:
     # - src/environments/environment.ts
     # - src/environments/environment.mockup.ts
-	echo ${red}printSelectPlatform${end}
+	printSelectPlatform
 	RUN_CMD="ng serve $RUN_OPTIONS --open"
     echo Running Angular application with the following command: ${cyn}$RUN_CMD${end}
     $RUN_CMD
@@ -18,8 +18,8 @@ run()
 printSelectPlatform()
 {
 	echo ${grn}Select Angular environment run option : ${end}
-	echo ${grn}1. Mockup configuration${end}
-    echo ${grn}2. Development configuration${end}
+    echo ${grn}1. Development environment${end}
+	echo ${grn}2. Production Rasoberry environment${end}
 	read PLATFORM_OPTION
 	configureRunOptions
 }
@@ -27,9 +27,9 @@ printSelectPlatform()
 configureRunOptions()
 {
 	case $PLATFORM_OPTION in
-		1)  RUN_OPTIONS="--configuration=mockup"
+		1)  RUN_OPTIONS=
 			;;
-        2)  RUN_OPTIONS=
+        2)  RUN_OPTIONS="--configuration=production"
 			;;
 		*) 	printf "\n${red}No valid option selected${end}\n"
 			printSelectPlatform
